@@ -8,15 +8,15 @@ class DbConfig
     /**
      * @param string $query
      * @param array $params
-     * @param int $response_format
+     * @param int $fetch_mode
      * @return TaskResult
      */
-    public static function executeQuery($query = "", $params = [], $response_format = PDO::FETCH_OBJ): TaskResult
+    public static function executeQuery($query = "", $params = [], $fetch_mode = PDO::FETCH_OBJ): TaskResult
     {
         $task_result = null;
 
         try {
-            $conn = DbConfig::getDbConnection($response_format);
+            $conn = DbConfig::getDbConnection($fetch_mode);
             $stmt = $conn->prepare($query);
 
             if (stripos($query, "SELECT") === 0) {
@@ -45,10 +45,11 @@ class DbConfig
     }
 
     /**
-     * @param int $fetch_type
+     * @todo Change host, user and password appropriately
+     * @param int $fetch_mode
      * @return PDO
      */
-    private static function getDbConnection($fetch_type = PDO::FETCH_ASSOC)
+    private static function getDbConnection($fetch_mode = PDO::FETCH_ASSOC)
     {
         $host = getenv('POS_DB_HOST') ?: "localhost";
         $user = getenv('POS_DB_USER') ?: "root";
@@ -57,7 +58,7 @@ class DbConfig
         $dns = "mysql:host=$host;dbname=$db";
 
         $conn = new PDO($dns, $user, $pass, array(PDO::ATTR_PERSISTENT => true));
-        $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, $fetch_type);
+        $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, $fetch_mode);
         $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         return $conn;
     }
