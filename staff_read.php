@@ -22,5 +22,5 @@ if ($REQUEST_METHOD == 'GET') {
         sprintf("expected '%s' got '%s'", implode(',', $ALLOWED_REQUEST_METHODS), $REQUEST_METHOD));
 }
 
-$response->printResponse();;
+$response->printResponse();
 exit();

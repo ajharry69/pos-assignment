@@ -5,12 +5,6 @@ require "TaskResult.php";
 
 class DbConfig
 {
-    /**
-     * @param string $query
-     * @param array $params
-     * @param int $fetch_mode
-     * @return TaskResult
-     */
     public static function executeQuery($query = "", $params = [], $fetch_mode = PDO::FETCH_OBJ): TaskResult
     {
         $task_result = null;

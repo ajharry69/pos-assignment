@@ -23,7 +23,5 @@ if ($REQUEST_METHOD == 'POST') {
     );
 }
 
-http_response_code($response->status_code);
-header("Content-Type: application/json; charset=UTF-8");
 $response->printResponse();
 exit();
