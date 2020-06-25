@@ -26,6 +26,13 @@ class Response
         $this->is_error = !in_array($this->status_code, range(200, 299));
     }
 
+    public function printResponse()
+    {
+        http_response_code($this->status_code);
+        header("Content-Type: application/json; charset=UTF-8");
+        if ($this->status_code != 204) print($this->getJson());
+    }
+
     /**
      * @return string in json format
      */
@@ -36,13 +43,6 @@ class Response
         if (!is_null($this->debug_message)) $res['debug_message'] = $this->debug_message;
         if (!is_null($this->payload)) $res['payload'] = $this->payload;
         return $this->status_code == 204 ? null : json_encode($res);
-    }
-
-    public function printResponse()
-    {
-        http_response_code($this->status_code);
-        header("Content-Type: application/json; charset=UTF-8");
-        if ($this->status_code != 204) print($this->getJson());
     }
 
 }
