@@ -1,6 +1,6 @@
 <?php
-require_once "DbConfig.php";
-require_once "model/Staff.php";
+require_once "../DbConfig.php";
+require_once "../model/Staff.php";
 
 class StaffController
 {
@@ -17,18 +17,18 @@ class StaffController
         return $this->getLastCreatedStaff();
     }
 
-    public function getStaffs()
-    {
-        $query = "SELECT * FROM `staff`;";
-        $result = DbConfig::executeQuery($query);
-        return $result->getPayload();
-    }
-
     private function getLastCreatedStaff()
     {
         $query = "SELECT * FROM `staff` ORDER BY id DESC LIMIT 1;";
         $result = DbConfig::executeQuery($query);
         return Staff::fromDbResult($result->getPayload()[0]);
+    }
+
+    public function getStaffs()
+    {
+        $query = "SELECT * FROM `staff`;";
+        $result = DbConfig::executeQuery($query);
+        return $result->getPayload();
     }
 
 }

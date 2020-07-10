@@ -39,9 +39,9 @@ class DbConfig
     }
 
     /**
-     * @todo Change host, user and password appropriately
      * @param int $fetch_mode
      * @return PDO
+     * @todo Change host, user and password appropriately
      */
     private static function getDbConnection($fetch_mode = PDO::FETCH_ASSOC)
     {

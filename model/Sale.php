@@ -1,6 +1,5 @@
 <?php
 
-
 class Sale
 {
     public $id = -1;
@@ -18,14 +17,15 @@ class Sale
         $this->total = $total;
     }
 
-
+    /**
+     * @return Sale
+     * @throws Exception
+     */
     public static function fromJsonRequest()
     {
-        try {
-            return self::fromDbResult(json_decode(file_get_contents("php://input")));
-        } catch (Exception $exception) {
-            return null;
-        }
+        $contents = file_get_contents("php://input");
+        if (strlen($contents) < 1) throw new Exception('invalid request data');
+        return self::fromDbResult(json_decode($contents));
     }
 
     public static function fromDbResult($object)

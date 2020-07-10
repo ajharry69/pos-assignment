@@ -1,6 +1,6 @@
 <?php
-require_once "DbConfig.php";
-require_once "model/Sale.php";
+require_once "../DbConfig.php";
+require_once "../model/Sale.php";
 
 class SaleController
 {
@@ -18,17 +18,17 @@ class SaleController
         return $this->getLastCreatedSale();
     }
 
-    public function getSales()
-    {
-        $query = "SELECT * FROM `sales`;";
-        $result = DbConfig::executeQuery($query);
-        return $result->getPayload();
-    }
-
     private function getLastCreatedSale()
     {
         $query = "SELECT * FROM `sales` ORDER BY id DESC LIMIT 1;";
         $result = DbConfig::executeQuery($query);
         return Sale::fromDbResult($result->getPayload()[0]);
+    }
+
+    public function getSales()
+    {
+        $query = "SELECT * FROM `sales`;";
+        $result = DbConfig::executeQuery($query);
+        return $result->getPayload();
     }
 }
